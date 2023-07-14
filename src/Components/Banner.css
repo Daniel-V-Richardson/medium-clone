@@ -1,0 +1,38 @@
+.banner-container {
+    display: flex;
+    margin: auto;
+    margin-top: 70px;
+    background-color: #ffc017;
+}
+.banner-left-container {
+    width: 60%;
+    display: flex;
+    margin: 0;
+    justify-content: center;
+    align-items: left;
+    padding-left: 10%;
+    flex-direction: column;
+}
+.banner-left-container h1 {
+    text-align: left;
+    font-size: 6rem;
+    margin: 0;
+}
+.banner-left-container p {
+    width: 60%;
+    font-size: 1.5rem;
+    text-align: left;
+    font-weight: 600;
+    margin-bottom: 50px;
+}
+.start-reading-btn {
+    align-items: left;
+    width: 25%;
+    text-decoration: none;
+    padding: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    color: white;
+    background-color: black;
+}
