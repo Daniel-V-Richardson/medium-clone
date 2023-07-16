@@ -62,8 +62,10 @@ const Write = () => {
 
     try {
       const newPostRef = await addDoc(postsCollection, postData);
-      console.log("New post added with ID: ", newPostRef.id);
-      navigate("/startreading");
+      const newPostId = newPostRef.id
+      console.log("New post added with ID: ", newPostId);
+      navigate(`/post/${newPostId}`); 
+      // navigate("/startreading");
     } catch (error) {
       alert("Error publishing post: " + error);
     }
@@ -77,7 +79,7 @@ const Write = () => {
     <div className="write-container">
       <div className="write-nav-container">
         <div className="write-nav-left-container">
-          <Link to="/">
+          <Link to="/startreading">
             <img src={SmallLogo} alt="" />
           </Link>
           <p>Draft in {userData?.email}</p>

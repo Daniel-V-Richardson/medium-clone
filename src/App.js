@@ -7,18 +7,30 @@ import EmailSignIn from "./Pages/EmailSignIn.jsx";
 import EmailSignUp from "./Pages/EmailSignUp.jsx";
 import Write from "./Pages/Write.jsx";
 import StartReadingPage from "./Pages/StartReadingPage.jsx";
+import PostDetails from "./Components/PostDetails.jsx";
+import { useAuth } from "./AuthContext.js";
 
 function App() {
+  const { currentUser } = useAuth();
+
   return (
     <div className="App">
       <Routes>
-        <Route index element={<HomePage />} />
         <Route path="/getstarted" element={<JoinMedium />} />
         <Route path="/signin" element={<SigninPage />} />
         <Route path="/email-signin" element={<EmailSignIn />} />
         <Route path="/email-signup" element={<EmailSignUp />} />
-        <Route path="/write" element={<Write />} />
-        <Route path="/startreading" element={<StartReadingPage />} />
+        <Route
+          path="/startreading"
+          element={currentUser ? <StartReadingPage /> : <HomePage />}
+        />
+        <Route
+          path="/write"
+          element={currentUser ? <Write /> : <HomePage />}
+        />
+        <Route path="*" element={<HomePage />} />
+
+        <Route path="/post/:postId" element={<PostDetails />} />
       </Routes>
     </div>
   );
