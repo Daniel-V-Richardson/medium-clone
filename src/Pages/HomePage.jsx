@@ -49,7 +49,7 @@ const HomePage = () => {
     <div className="home-container">
       <Navbar userData={userData} />
       {/* <Banner /> */}
-      <Spline className="w-[10%] h-[10%]" scene="https://prod.spline.design/WTl0uo3oqQuNt3pf/scene.splinecode">
+      <Spline className="w-[100%] h-[70%]" scene="https://prod.spline.design/WTl0uo3oqQuNt3pf/scene.splinecode">
        <h1 className="z-10">Start Reading</h1>
       </Spline>
       <div className=" font-black text-5xl flex md:ml-[150px]  sm:ml-0 mt-4 md:mt-[50px] ] ">
