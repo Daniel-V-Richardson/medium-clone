@@ -48,14 +48,12 @@ const HomePage = () => {
   return (
     <div className="home-container">
       <Navbar userData={userData} />
-      {/* <Banner /> */}
-      <Spline className="w-[100%] h-[70%]" scene="https://prod.spline.design/WTl0uo3oqQuNt3pf/scene.splinecode">
-       <h1 className="z-10">Start Reading</h1>
-      </Spline>
-      <div className=" font-black text-5xl flex md:ml-[150px]  sm:ml-0 mt-4 md:mt-[50px] ] ">
+      <Banner />
+      {/* <Spline  scene="https://prod.spline.design/WTl0uo3oqQuNt3pf/scene.splinecode" /> */}
+      <div className=" font-black text-5xl flex md:ml-[120px]  sm:ml-0 mt-4 md:mt-[50px] ] ">
         Latest Posts
       </div>
-      <hr className="w-[150px] md:ml-[150px] border-t-2 border-black sm:ml-[30px] " />
+      <hr className="w-[150px] md:ml-[120px] border-t-2 border-black sm:ml-[30px] "/>
       <div className="flex flex-wrap justify-center md:pl-[100px] sm:pl-0  ">
         <PostCard />
       </div>
