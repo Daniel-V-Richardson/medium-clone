@@ -14,7 +14,7 @@ const Banner = () => {
       } else {
         setIsLoggedIn(false);
       }
-    });
+  });
 
     return () => unsubscribe();
   }, []);

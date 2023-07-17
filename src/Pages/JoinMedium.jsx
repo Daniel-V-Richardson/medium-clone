@@ -10,8 +10,9 @@ import MediumGif from "../assets/img/medium.gif"
 const JoinMedium = () => {
   return (
     <div className="joinmedium-container">
-      <p>Join Medium
-        <img className="medium-gif" src={MediumGif} alt="" />
+      <p className="join-text">
+        Join Medium
+        {/* <img className="medium-gif" src={MediumGif} alt="" /> */}
       </p>
       <div className="joinmedium-btn-container">
         <Link to="/" className="joinmedium-button">

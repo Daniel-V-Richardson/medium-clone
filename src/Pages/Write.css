@@ -74,3 +74,20 @@
   outline: none;
   margin-bottom: 40px;
 }
+@media only screen and (max-width: 600px) {
+  .write-nav-container {
+    width: 100%;
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+  .write-nav-left-container {
+    width: 90%;
+  }
+  .publish-btn{
+    width: 70%;
+  }
+  .main-content-container {
+    padding-left: 20px;
+    width: 100%;
+  }
+}

@@ -5,7 +5,7 @@ import GoogleLogo from "../assets/img/google-logo.png";
 import FacebookLogo from "../assets/img/facebook-logo.png";
 import EmailLogo from "../assets/img/email-logo.png";
 import GithubLogo from "../assets/img/github-logo.png";
-import MediumGif from "../assets/img/medium.gif";
+// import MediumGif from "../assets/img/medium.gif";
 
 const SigninPage = () => {
   
@@ -14,7 +14,7 @@ const SigninPage = () => {
     <div className="joinmedium-container">
       <p>
         Welcome Back
-        <img className="medium-gif" src={MediumGif} alt="" />
+        {/* <img className="medium-gif" src={MediumGif} alt="" /> */}
       </p>
       <div className="joinmedium-btn-container">
         <Link to="/" className="joinmedium-button">

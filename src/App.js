@@ -9,6 +9,7 @@ import Write from "./Pages/Write.jsx";
 import StartReadingPage from "./Pages/StartReadingPage.jsx";
 import PostDetails from "./Components/PostDetails.jsx";
 import { useAuth } from "./AuthContext.js";
+import FeedbackPage from "./Pages/FeedbackPage.jsx";
 
 function App() {
   const { currentUser } = useAuth();
@@ -24,10 +25,8 @@ function App() {
           path="/startreading"
           element={currentUser ? <StartReadingPage /> : <HomePage />}
         />
-        <Route
-          path="/write"
-          element={currentUser ? <Write /> : <HomePage />}
-        />
+        <Route path="/write" element={currentUser ? <Write /> : <HomePage />} />
+        <Route path="/feedback" element={<FeedbackPage />} />
         <Route path="*" element={<HomePage />} />
 
         <Route path="/post/:postId" element={<PostDetails />} />

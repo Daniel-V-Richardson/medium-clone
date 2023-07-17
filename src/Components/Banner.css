@@ -36,3 +36,26 @@
     color: white;
     background-color: black;
 }
+
+@media only screen and (max-width:600px){
+    .banner-container {
+        width: 100%
+    }
+    .banner-right-container{
+        display: none;
+    }
+    .banner-left-container {
+        width: 100%;
+    }
+    .banner-left-container h1{ 
+        margin-top: 50px;
+        font-size: 3rem;
+    }
+    .banner-left-container p {
+        font-size: 1rem;
+    }
+    .start-reading-btn {
+        width: 40%;
+        margin-bottom:20px;
+    }
+}

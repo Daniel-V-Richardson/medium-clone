@@ -74,8 +74,63 @@
   font-weight: 800;
 }
 .joinmedium-bottom-text {
-    text-align: center;
-    width: 40%;
-    font-size: 1rem;
-    color: black; 
+  text-align: center;
+  width: 40%;
+  font-size: 1rem;
+  color: black;
 }
+
+@media only screen and (max-width: 600px) {
+  .joinmedium-container {
+    width: 100%;
+    padding: 0;
+    padding-top: 0px;
+    margin: 0;
+    margin: auto;
+  }
+  .joinmedium-container p {
+    margin-top: 80px;
+    margin-bottom:40px;
+  }
+  /* .medium-gif{
+    width: 60%;
+    margin-bottom: 0px;
+  } */
+  .joinmedium-btn-container {
+    width:90%;
+    margin-top:0px;
+    padding: 10px;
+    margin-bottom: 0px;
+  }
+  .joinmedium-button 
+  { 
+    padding: 10px;
+    margin-bottom: 4px;
+  }
+  .joinmedium-button img {
+    width: 50px;
+    padding: 10px;
+  }
+  .joinmedium-button p {
+    font-size: 1.5rem;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+  }
+  .already-have-an-account-container {
+    display: flex;
+    width: 100%;
+    align-items: start;
+    text-align: center;
+    gap: 20px;
+    margin: 0;
+  }
+  .already-have-an-account-container p {
+    margin-top: 10px;
+  }
+ .signin-link {
+  margin-top: 10px;
+ } 
+}
+

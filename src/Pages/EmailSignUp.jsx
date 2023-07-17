@@ -4,14 +4,17 @@ import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { auth, db } from "../FirebaseConfig";
 import { collection, doc, setDoc } from "firebase/firestore";
+import  "./EmailSignUp.css"
 
 const EmailSignUp = () => {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSignup = async (e) => {
+    setLoading(true);
     e.preventDefault();
 
     await createUserWithEmailAndPassword(auth, email, password)
@@ -29,6 +32,7 @@ const EmailSignUp = () => {
         console.log(errorCode);
         alert(errorMessage);
       });
+    setLoading(false);
   };
   async function AddToFirebase(uid) {
     const newData = {
@@ -41,38 +45,62 @@ const EmailSignUp = () => {
   }
   return (
     <div className="email-signin-container">
-      <div className="email-signin-text">Sign up with email</div>
-      <form>
-        <div className="email-inputs-container">
-          <p>Your Email</p>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+      {loading ? (
+        <div className="bg-white w-[100vw] h-[100vh] flex justify-center items-center">
+          <div
+            aria-label="Orange and tan hamster running in a metal wheel"
+            role="img"
+            class="wheel-and-hamster"
+          >
+            <div class="wheel"></div>
+            <div class="hamster">
+              <div class="hamster__body">
+                <div class="hamster__head">
+                  <div class="hamster__ear"></div>
+                  <div class="hamster__eye"></div>
+                  <div class="hamster__nose"></div>
+                </div>
+                <div class="hamster__limb hamster__limb--fr"></div>
+                <div class="hamster__limb hamster__limb--fl"></div>
+                <div class="hamster__limb hamster__limb--br"></div>
+                <div class="hamster__limb hamster__limb--bl"></div>
+                <div class="hamster__tail"></div>
+              </div>
+            </div>
+            <div class="spoke"></div>
+          </div>
         </div>
-        <div className="email-inputs-container">
-          <p>Your Password</p>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <button
-          type="submit"
-          className="email-continue-btn"
-          onClick={handleSignup}
-        >
-          Continue
-        </button>
-      </form>
-      <div className="signin-with-other-options-container">
-        <MdOutlineKeyboardArrowLeft color="#25ae20" />
-        <Link to="/getstarted" className="email-goback-text">
-          All sign in options
-        </Link>
-      </div>
+      ) : (
+        <><div className="email-signin-text">Sign up with email</div><form>
+            <div className="email-inputs-container">
+              <p>Your Email</p>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)} />
+            </div>
+            <div className="email-inputs-container">
+              <p>Your Password</p>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)} />
+            </div>
+            <button
+              type="submit"
+              className="email-continue-btn"
+              onClick={handleSignup}
+            >
+              Continue
+            </button>
+          </form><div className="signin-with-other-options-container">
+              <MdOutlineKeyboardArrowLeft color="#25ae20" />
+              <Link to="/getstarted" className="email-goback-text">
+                All sign in options
+              </Link>
+            </div></>
+      )}
+     
     </div>
   );
 };

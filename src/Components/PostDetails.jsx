@@ -68,13 +68,13 @@ const PostDetails = () => {
       <SignedInNav />
       <Link
         to="/startreading"
-        className="pl-[25%] pr-[25%] flex no-underline text-black"
+        className="pl-2 md:pl-[25%] md:pr-[25%] flex no-underline text-black"
       >
         <IoArrowBack size={32} />
       </Link>
       {post ? (
         <div className="h-[600px] overflow-scroll no-scrollbar">
-          <div className="pl-[25%] pr-[25%]">
+          <div className="pl-2 pr-2 md:pl-[25%] md:pr-[25%]">
             <div className="flex mt-[40px] gap-2 items-center justify-left ">
               <svg
                 width="16"
@@ -98,7 +98,7 @@ const PostDetails = () => {
             </p>
 
             <div className="flex flex-row mt-3 ">
-              <div className="border-1 w-12 h-12 rounded-full p-1 mr-3 border-black">
+              <div className="border-1 w-12 h-12 rounded-full p-1 md:mr-3 border-black">
                 <img
                   className="w-10 object-contain overflow-hidden"
                   src={DefaultUserImage}
@@ -132,7 +132,7 @@ const PostDetails = () => {
           </div>
 
           <div className="bg-[#f9f9f9]">
-            <div className="flex flex-col pl-[25%] pr-[25%]">
+            <div className="items-center pl-2 pr-2 flex flex-col md:pl-[25%] md:pr-[25%]">
               <div className="flex w-[100px] h-[100px] border-1 border-black rounded-full p-2 mt-14">
                 <img
                   src={DefaultUserImage}
@@ -143,7 +143,7 @@ const PostDetails = () => {
               <p className="flex mt-2 text-2xl font-bold">
                 Written by {post.author}
               </p>
-              <p className="flex text-left">
+              <p className="flex sm:text-center">
                 CEO of Gado Images | Content Consultant | Covers tech, food, AI
                 & photography | http://bayareatelegraph.com &
                 http://lifetechshorts.com | tom@gadoimages.com

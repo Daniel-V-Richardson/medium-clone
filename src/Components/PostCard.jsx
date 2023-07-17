@@ -30,7 +30,7 @@ const PostCard = () => {
   return (
     <div>
       {data.map((post) => (
-        <div className="border-b-2 w-[70%] p-5" key={post.id} >
+        <div className="border-b-2 md:w-[70%]  bg-white sm:w-[100%] p-3" key={post.id} >
           <Link className="flex gap-3 mb-2 text-justify justify-start items-center no-underline text-black">
             <img
               alt="Default"

@@ -48,3 +48,9 @@
     color: #25ae20;
     text-decoration: none;
 }
+
+@media only screen and (max-width:600px){
+    .email-signin-container {
+        width: 100%;
+    }
+}
