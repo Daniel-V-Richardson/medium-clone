@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import UserImage from "../assets/img/default-user.png";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../FirebaseConfig";
+import { Link } from "react-router-dom";
 
 const SmallInfoCard = () => {
   const [data, setData] = useState([]);
@@ -15,7 +16,9 @@ const SmallInfoCard = () => {
       const querySnapshot = await getDocs(collection(db, "Posts"));
       const dataArray = [];
       querySnapshot.forEach((doc) => {
-        dataArray.push(doc.data());
+        const postData = doc.data();
+        const postWithId = { ...postData, id: doc.id }; 
+        dataArray.push(postWithId);
       });
       setData(dataArray);
     } catch (error) {
@@ -24,11 +27,8 @@ const SmallInfoCard = () => {
   };
   return (
     <div className="w-full">
-      {data.map((post, index) => (
-        <div
-          className="flex flex-col gap-2"
-          key={index}
-        >
+      {data.map((post) => (
+        <div className="flex flex-col gap-2" key={post.id}>
           <div className=" border-black flex flex-row gap-1 pl-10 items-center">
             <img
               src={UserImage}
@@ -47,7 +47,9 @@ const SmallInfoCard = () => {
               ></path>
             </svg>
           </div>
-          <div className="flex pl-10 text-left font-black">{post.title}</div>
+          <Link to={`/post/${post.id}`} className="no-underline text-black">
+            <div className="flex pl-10 text-left font-black">{post.title}</div>
+          </Link>
         </div>
       ))}
     </div>
