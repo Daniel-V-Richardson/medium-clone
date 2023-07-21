@@ -10,6 +10,8 @@ import StartReadingPage from "./Pages/StartReadingPage.jsx";
 import PostDetails from "./Components/PostDetails.jsx";
 import { useAuth } from "./AuthContext.js";
 import FeedbackPage from "./Pages/FeedbackPage.jsx";
+import SavedPage from "./Pages/SavedPage.jsx";
+import ProfilePage from "./Pages/ProfilePage.jsx"
 
 function App() {
   const { currentUser } = useAuth();
@@ -28,8 +30,9 @@ function App() {
         <Route path="/write" element={currentUser ? <Write /> : <HomePage />} />
         <Route path="/feedback" element={<FeedbackPage />} />
         <Route path="*" element={<HomePage />} />
-
+        <Route path="/saved" element={<SavedPage />} />
         <Route path="/post/:postId" element={<PostDetails />} />
+        <Route path="/profile" element={<ProfilePage />} />
       </Routes>
     </div>
   );

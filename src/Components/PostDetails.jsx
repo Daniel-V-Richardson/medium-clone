@@ -1,5 +1,3 @@
-// PostDetails.js
-
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
@@ -21,13 +19,12 @@ const PostDetails = () => {
   const [morePosts, setMorePosts] = useState([]);
 
   useEffect(() => {
-    // Fetch the post details from Firestore using the postId
-
     const fetchPostDetails = async () => {
       try {
         const postRef = doc(db, "Posts", postId);
         const postSnapshot = await getDoc(postRef);
         if (postSnapshot.exists()) {
+          console.log(postSnapshot);
           setPost(postSnapshot.data());
         } else {
           console.log("Post not found");
@@ -61,8 +58,6 @@ const PostDetails = () => {
       fetchMorePosts();
     }
   }, [postId, post, morePosts]);
-
-  // Render the post details
   return (
     <div>
       <SignedInNav />
@@ -98,12 +93,20 @@ const PostDetails = () => {
             </p>
 
             <div className="flex flex-row mt-3 ">
-              <div className="border-1 w-12 h-12 rounded-full p-1 md:mr-3 border-black">
-                <img
-                  className="w-10 object-contain overflow-hidden"
-                  src={DefaultUserImage}
-                  alt="userimage"
-                />
+              <div className="border-1 w-12 h-12 rounded-full p-1 md:mr-3 border-black overflow-hidden">
+                {post.profileImage ? (
+                  <img
+                    className="w-full h-full object-cover"
+                    src={post.profileImage}
+                    alt="userimage"
+                  />
+                ) : (
+                  <img
+                    className="w-full h-full object-cover"
+                    src={DefaultUserImage}
+                    alt="userimage"
+                  />
+                )}
               </div>
               <div className="flex flex-col text-left m-0">
                 <p className="m-0 font-bold">{post.author}</p>
@@ -124,21 +127,26 @@ const PostDetails = () => {
               </div>
             </div>
             <p className="text-justify text-1xl">
-              <span className="text-7xl font-bold">
-                {post.content.charAt(0)}
-              </span>
-              {post.content.slice(1)}
+              <div dangerouslySetInnerHTML={{ __html: post.content }} />
             </p>
           </div>
 
           <div className="bg-[#f9f9f9]">
             <div className="items-center pl-2 pr-2 flex flex-col md:pl-[25%] md:pr-[25%]">
-              <div className="flex w-[100px] h-[100px] border-1 border-black rounded-full p-2 mt-14">
-                <img
-                  src={DefaultUserImage}
-                  alt="userimage"
-                  className="object-contain w-[90px]"
-                />
+              <div className="flex w-[100px] h-[100px] border-1 border-black rounded-full p-2 mt-14 overflow-hidden">
+                {post.profileImage ? (
+                  <img
+                    src={post.profileImage}
+                    alt="userimage"
+                    className="object-cover w-full h-full"
+                  />
+                ) : (
+                  <img
+                    src={DefaultUserImage}
+                    alt="userimage"
+                    className="object-cover w-full h-full"
+                  />
+                )}
               </div>
               <p className="flex mt-2 text-2xl font-bold">
                 Written by {post.author}
@@ -164,7 +172,9 @@ const PostDetails = () => {
                         <div className="flex w-10 h-10 rounded-full border-1 border-black">
                           <img src={DefaultUserImage} className="" alt="" />
                         </div>
-                        <p className="items-center justify-center mt-auto  mb-auto">{morePost.author}</p>
+                        <p className="items-center justify-center mt-auto  mb-auto">
+                          {morePost.author}
+                        </p>
                       </div>
                       <p className="font-bold m-0">{morePost.title}</p>
                       <p className="font-medium m-0">{morePost.description}</p>

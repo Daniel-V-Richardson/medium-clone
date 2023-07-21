@@ -1,48 +1,65 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import React, { useState } from "react";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
-import { auth, db } from "../FirebaseConfig";
-import { collection, doc, setDoc } from "firebase/firestore";
-import  "./EmailSignUp.css"
+import { auth, db, storage } from "../FirebaseConfig";
+import { doc, setDoc } from "firebase/firestore";
+import DefaultUserImage from "../assets/img/default-user.png";
+import "./EmailSignUp.css";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 const EmailSignUp = () => {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [profileImage, setProfileImage] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [showImagePickerDialog, setShowImagePickerDialog] = useState(false);
+
+  const handleImageChange = (e) => {
+    const selectedImage = e.target.files[0];
+    setProfileImage(selectedImage);
+    setShowImagePickerDialog(false);
+  };
 
   const handleSignup = async (e) => {
     setLoading(true);
     e.preventDefault();
 
-    await createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        const uid = user.uid;
-        console.log(user);
-        AddToFirebase(uid);
-        navigate("/");
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorMessage);
-        console.log(errorCode);
-        alert(errorMessage);
-      });
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      const uid = user.uid;
+
+      let profileImageUrl = null;
+      if (profileImage) {
+        const storageRef = ref(storage, `profile_images/${uid}`);
+        await uploadBytes(storageRef, profileImage);
+        profileImageUrl = await getDownloadURL(storageRef);
+
+        await updateProfile(auth.currentUser, {
+          photoURL: profileImageUrl,
+        });
+      }
+
+      const newData = {
+        email: email,
+        pass: password,
+        profileImage: profileImageUrl,
+      };
+      const userDocRef = doc(db, "Users", uid);
+      await setDoc(userDocRef, newData);
+
+      navigate("/startreading");
+    } catch (error) {
+      console.error(error);
+      alert("Error signing up. Please try again.");
+    }
+
     setLoading(false);
   };
-  async function AddToFirebase(uid) {
-    const newData = {
-      email: email,
-      pass: password,
-    };
-    const docRef = doc(collection(db, "Users"), uid);
-    await setDoc(docRef, newData);
-    // const documentId = docRef.id;
-  }
+
   return (
     <div className="email-signin-container">
       {loading ? (
@@ -71,20 +88,47 @@ const EmailSignUp = () => {
           </div>
         </div>
       ) : (
-        <><div className="email-signin-text">Sign up with email</div><form>
-            <div className="email-inputs-container">
+        <>
+          <div className="email-signin-text">Sign up with email</div>
+          <form>
+            <div
+              className="w-[150px] h-[150px] items-center m-auto border-1 border-black rounded-full overflow-hidden"
+              onClick={() => setShowImagePickerDialog(true)}
+            >
+              {profileImage ? (
+                <img
+                  className="object-cover w-full h-full"
+                  src={URL.createObjectURL(profileImage)}
+                  alt="Profile"
+                />
+              ) : (
+                <img
+                  className="object-fill w-full"
+                  src={DefaultUserImage}
+                  alt="Default Profile"
+                />
+              )}
+            </div>
+            {showImagePickerDialog && (
+                <div className="image-picker-dialog">
+                  <input type="file" onChange={handleImageChange} />
+                </div>
+            )}
+            <div className="email-inputs-container mt-10">
               <p>Your Email</p>
               <input
                 type="email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)} />
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </div>
             <div className="email-inputs-container">
               <p>Your Password</p>
               <input
                 type="password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)} />
+                onChange={(e) => setPassword(e.target.value)}
+              />
             </div>
             <button
               type="submit"
@@ -93,14 +137,15 @@ const EmailSignUp = () => {
             >
               Continue
             </button>
-          </form><div className="signin-with-other-options-container">
-              <MdOutlineKeyboardArrowLeft color="#25ae20" />
-              <Link to="/getstarted" className="email-goback-text">
-                All sign in options
-              </Link>
-            </div></>
+          </form>
+          <div className="signin-with-other-options-container">
+            <MdOutlineKeyboardArrowLeft color="#25ae20" />
+            <Link to="/getstarted" className="email-goback-text">
+              All sign in options
+            </Link>
+          </div>
+        </>
       )}
-     
     </div>
   );
 };

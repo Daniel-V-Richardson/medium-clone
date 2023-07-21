@@ -7,7 +7,7 @@ import { auth, db } from "../FirebaseConfig";
 import { useNavigate } from "react-router-dom";
 import { collection, doc, getDoc } from "firebase/firestore";
 import PostCard from "../Components/PostCard";
-import Spline from "@splinetool/react-spline";
+// import Spline from "@splinetool/react-spline";
 
 const HomePage = () => {
   const [userData, setUserData] = useState(null);
@@ -46,15 +46,15 @@ const HomePage = () => {
   }
 
   return (
-  <div className="home-container">
+    <div className="home-container">
       <Navbar userData={userData} />
       <Banner />
       {/* <Spline  scene="https://prod.spline.design/WTl0uo3oqQuNt3pf/scene.splinecode" /> */}
-      <div className=" font-black text-5xl flex md:ml-[120px]  sm:ml-0 mt-4 md:mt-[50px] ] ">
+      <div className="pb-3 w-[30%] font-black text-5xl flex md:ml-[140px] border-black mb-4 border-b sm:ml-0 mt-4 md:mt-[50px]">
         Latest Posts
       </div>
-      <hr className="w-[150px] md:ml-[120px] border-t-2 border-black sm:ml-[30px] "/>
-      <div className="flex flex-wrap justify-center pl-[100px] sm:ml-0 sm:w-[100%] ">
+      {/* <hr className=" w-[150px] pl-[150px] border-t-2 border-black sm:ml-[0px]"/> */}
+      <div className="flex flex-wrap justify-center md:pl-[100px] sm:ml-0 sm:w-[100%] ">
         <PostCard />
       </div>
     </div>

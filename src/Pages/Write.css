@@ -74,6 +74,18 @@
   outline: none;
   margin-bottom: 40px;
 }
+.wrapper-class {
+  padding: 1rem;
+  border: 1px solid #ccc;
+}
+.editor-class {
+  background-color: lightgray;
+  padding: 1rem;
+  border: 1px solid #ccc;
+}
+.toolbar-class {
+  border: 1px solid #ccc;
+}
 @media only screen and (max-width: 600px) {
   .write-nav-container {
     width: 100%;
@@ -83,7 +95,7 @@
   .write-nav-left-container {
     width: 90%;
   }
-  .publish-btn{
+  .publish-btn {
     width: 70%;
   }
   .main-content-container {
@@ -91,3 +103,5 @@
     width: 100%;
   }
 }
+
+

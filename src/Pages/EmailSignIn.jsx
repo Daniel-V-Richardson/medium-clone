@@ -16,7 +16,7 @@ const EmailSignIn = () => {
   const handleSignIn = async (e) => {
     setLoading(true);
     e.preventDefault();
-    signInWithEmailAndPassword(auth, email, password)
+    await signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
         navigate("/startreading", { email });

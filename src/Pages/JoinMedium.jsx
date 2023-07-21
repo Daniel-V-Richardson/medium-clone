@@ -5,7 +5,6 @@ import FacebookLogo from "../assets/img/facebook-logo.png";
 import EmailLogo from "../assets/img/email-logo.png";
 import GithubLogo from "../assets/img/github-logo.png";
 import "./JoinMedium.css";
-import MediumGif from "../assets/img/medium.gif"
 
 const JoinMedium = () => {
   return (

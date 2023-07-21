@@ -9,17 +9,25 @@ import {
   doc,
   getDoc,
   serverTimestamp,
+  updateDoc,
 } from "firebase/firestore";
 import { auth, db } from "../FirebaseConfig";
 import { onAuthStateChanged } from "firebase/auth";
+import { EditorState } from "draft-js";
+import { Editor } from "react-draft-wysiwyg";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import { stateToHTML } from "draft-js-export-html";
+import "../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import "draft-js/dist/Draft.css";
+// import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 const Write = () => {
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
-  const [content, setContent] = useState("");
   const [loading, setLoading] = useState(true);
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -56,13 +64,16 @@ const Write = () => {
   }
 
   const publishPost = async () => {
+    const contentState = editorState.getCurrentContent();
+    const contentHTML = stateToHTML(contentState);
+
     if (!title) {
       alert("Enter Title to Publish");
       return;
     } else if (!desc) {
       alert("Enter Description to Publish");
       return;
-    } else if (!content) {
+    } else if (!contentHTML) {
       alert("Enter Content to Publish");
       return;
     }
@@ -72,22 +83,36 @@ const Write = () => {
     const postData = {
       title: title,
       description: desc,
-      content: content,
+      content: contentHTML,
       author: user.email,
+      profileImage: userData.profileImage,
       createdAt: serverTimestamp(),
+      postId: "",
     };
 
     try {
       const newPostRef = await addDoc(postsCollection, postData);
       const newPostId = newPostRef.id;
       console.log("New post added with ID: ", newPostId);
+
+      postData.postId = newPostId;
+
+      await updateDoc(newPostRef, postData);
+
+      const savedPostsCollection = collection(db, "SavedPosts");
+      const savedPostData = {
+        postId: newPostId,
+        userId: user.uid,
+      };
+      console.log(savedPostData);
+      await addDoc(savedPostsCollection, savedPostData);
+      console.log("PostId saved to Firestore.");
+
       navigate(`/post/${newPostId}`);
-      // navigate("/startreading");
     } catch (error) {
       alert("Error publishing post: " + error);
     }
   };
-
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -124,14 +149,13 @@ const Write = () => {
           required
           onChange={(e) => setDesc(e.target.value)}
         />
-        <textarea
-          type="text"
-          placeholder="Start writing your Content here..."
-          className="write-content"
-          value={content}
-          required
-          onChange={(e) => setContent(e.target.value)}
-        />
+        <div className="h-full border-l border-black pl-3 text-3xl">
+          <Editor
+          placeholder="Write Your Content here..."
+            editorState={editorState}
+            onEditorStateChange={setEditorState}
+          />
+        </div>
       </div>
     </div>
   );

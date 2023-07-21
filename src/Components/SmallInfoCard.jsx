@@ -30,11 +30,21 @@ const SmallInfoCard = () => {
       {data.map((post) => (
         <div className="flex flex-col gap-2" key={post.id}>
           <div className=" border-black flex flex-row gap-1 pl-10 items-center">
-            <img
-              src={UserImage}
-              alt="Person"
-              className="object-contain w-6 border-1 rounded-full "
-            />
+          <div className="w-[30px] h-[30px] m-0 items-center border-1 border-black rounded-full overflow-hidden">
+              {post.profileImage ? (
+                <img
+                  alt="Default"
+                  src={post.profileImage}
+                  className="object-cover w-full h-full"
+                />
+              ) : (
+                <img
+                  alt="Default"
+                  src={UserImage}
+                  className="object-cover w-full h-full"
+                />
+              )}
+            </div>
             <p className="my-auto font-normal ">{post.author}</p>
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
               <path
@@ -48,7 +58,7 @@ const SmallInfoCard = () => {
             </svg>
           </div>
           <Link to={`/post/${post.id}`} className="no-underline text-black">
-            <div className="flex pl-10 text-left font-black">{post.title}</div>
+            <div className="flex pl-10 text-left font-black mb-3">{post.title}</div>
           </Link>
         </div>
       ))}
